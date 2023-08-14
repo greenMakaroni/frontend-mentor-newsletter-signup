@@ -1,52 +1,450 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- displays site properly based on user's device -->
-
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- displays site properly based on user's device -->
   <link rel="icon" type="image/png" sizes="32x32" href="./assets/images/favicon-32x32.png">
-  
+
+  <!-- Google fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Title -->
   <title>Frontend Mentor | Newsletter sign-up form with success message</title>
 
   <!-- Feel free to remove these styles or customise in your own stylesheet 👍 -->
   <style>
-    .attribution { font-size: 11px; text-align: center; }
-    .attribution a { color: hsl(228, 45%, 44%); }
+    .notVisible {
+      opacity: 0;
+      z-index: -1;
+    }
+
+    #email_span {
+      font-family: 'Roboto' sans-serif;
+      font-weight: 700;
+    }
+
+    body {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100vw;
+      height: 100vh;
+      background-color: hsl(235, 18%, 26%);
+      margin: 0;
+      padding: 0;
+    }
+
+    .attribution {
+      top: 0;
+      position: absolute;
+      font-size: 11px;
+      text-align: center;
+      color: white;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .attribution a {
+      color: white;
+    }
+
+    .signup {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 60vw;
+      height: 80vh;
+      padding: 4vh;
+      border-radius: 30px;
+      background-color: hsl(0, 0%, 100%);
+      box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2), 0 12px 30px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-start;
+      padding: 70px 50px 70px 50px;
+      width: 50%;
+    }
+
+    .right {
+      height: 100%;
+    }
+
+    #right_image {
+      height: 80vh;
+      border-radius: 10px;
+    }
+
+    #right_image_mobile {
+      width: 0;
+      height: 0;
+    }
+
+    h1 {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+      margin: 0;
+      font-size: 3.5rem;
+    }
+
+    p {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 400;
+      font-size: 16px;
+    }
+
+    .list-icon {
+      margin-right: 15px;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 12px 0 35px 0;
+    }
+
+    .list-item {
+      display: flex;
+      flex-direction: row;
+    }
+
+    form {
+      position: relative;
+      width: 90%;
+    }
+
+    .labels {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    label {
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    #lbl_email_error {
+      position: absolute;
+      right: 0;
+      margin-right: -15px;
+      color: orangered;
+    }
+
+    input {
+      margin: 10px 0px 10px 0px;
+      padding: 20px;
+      border-radius: 6px;
+      width: 90%;
+      border: 1px solid;
+      border-color: gray;
+      cursor: pointer;
+      z-index: 20;
+      }
+
+    .input_error {
+      margin: 10px 0px 10px 0px;
+      padding: 20px;
+      border-radius: 6px;
+      width: 94%;
+      border: 1px solid;
+      border-color: orangered;
+      background-color: rgb(255, 176, 170);
+      color: orangered;
+      cursor: pointer;
+    }
+
+    li {
+      display: flex;
+      height: 35px;
+      align-items: center;
+      margin: 0;
+      padding: 0;
+    }
+
+    li img {
+      height: 60%;
+    }
+
+    button {
+      padding: 20px 40px 20px 40px;
+      border-radius: 6px;
+      width: 100%;
+      color: white;
+      font-family: 'Roboto' sans-serif;
+      border: none;
+      cursor: pointer;
+      background: hsl(235, 18%, 26%);
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, rgba(255, 98, 87, 1) 25%, rgba(255, 92, 37, 1) 90%);
+    }
+
+    .confirmation {
+      position: absolute;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: flex-start;
+      width: 300px;
+      padding: 3vw;
+      background-color: white;
+      border-radius: 25px;
+    }
+
+    .confirmation_img {
+      width: 15%;
+      height: 15%;
+      margin-bottom: 20px;
+    }
+
+    .confirmation_header {
+      font-size: 2rem;
+    }
+
+    .confirmation_par {
+      font-family: 'Roboto' sans-serif;
+      margin: 25px 0 25px 0;
+      font-size: 16px;
+    }
+
+    @media screen and (max-width: 650px) {
+      .confirmation {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 100vw;
+        height: 100vh;
+        background-color: white;
+        border-radius: 25px;
+      }
+
+      .confirmation_top {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      .confirmation_img {
+        margin-left: 5vw;
+        width: 15%;
+        height: 15%;
+        margin-bottom: 20px;
+      }
+
+      .confirmation_header {
+        margin-left: 5vw;
+        font-size: 2.5rem;
+      }
+
+      .confirmation_par {
+        margin-left: 5vw;
+        font-family: 'Roboto' sans-serif;
+        margin-bottom: 20px;
+      }
+
+      .dismiss {
+        width: 90%;
+        margin-bottom: 5vh;
+      }
+
+      .signup {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+        width: 100vw;
+        min-height: 110vh;
+        background-color: hsl(0, 0%, 100%);
+        padding: 0;
+        margin: 0;
+        border-radius: 0;
+      }
+
+      li {
+        display: flex;
+        height: 35px;
+        align-items: center;
+        margin: 0 0 10px 0;
+        padding: 0;
+      }
+
+      .attribution a {
+        color: rgb(0, 0, 0);
+      }
+
+      .attribution {
+        position: relative;
+        font-size: 11px;
+        text-align: center;
+        color: rgb(0, 0, 0);
+        font-family: 'Roboto', sans-serif;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+      }
+
+      .right {
+        display: flex;
+        position: absolute;
+        width: 100vw;
+        height: 30vh;
+        padding: 0;
+        margin: 0;
+      }
+
+      .left {
+        justify-content: center;
+        padding: 0;
+        margin: 0;
+        margin-top: 35vh;
+        width: 80vw;
+      }
+
+      #right_image {
+        height: 0vh;
+        border-radius: 0px;
+      }
+
+      #right_image_mobile {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-bottom-left-radius: 25px;
+        border-bottom-right-radius: 25px;
+
+      }
+
+    }
   </style>
 </head>
+
 <body>
+  <div id="main" class="signup">
+    <div class="left">
+      <h1>
+        Stay updated!
+      </h1>
+      <p>
+        Join 60,000+ product managers receiving monthly updates on:
+      </p>
 
-  <!-- Sign-up form start -->
+      <ul>
+        <li>
+          <img class="list-icon" src="./assets/images/icon-list.svg" alt="list icon">
+          <p>
+            Product discovery and building what matters
+          </p>
+        </li>
+        <li>
+          <img class="list-icon" src="./assets/images/icon-list.svg" alt="list icon">
+          <p>
+            Measuring to ensure updates are a success
+          </p>
+        </li>
+        <li>
+          <img class="list-icon" src="./assets/images/icon-list.svg" alt="list icon">
+          <p>
+            And much more!
+          </p>
+        </li>
+      </ul>
 
-  Stay updated!
 
-  Join 60,000+ product managers receiving monthly updates on:
+      <form id="signup_form">
+        <div class="labels">
+          <label for="email"> Email address </label>
+          <label id="lbl_email_error" for="email"> </label>
+        </div>
+        <input type="text" id="email" name="email" required placeholder="email@company.com">
+        <br><br>
+        <button type="submit"> Subscribe to monthly newsletter </button>
+      </form>
+    </div>
 
-  Product discovery and building what matters
-  Measuring to ensure updates are a success
-  And much more!
+    <div class="right">
+      <img id="right_image" src="./assets/images/illustration-sign-up-desktop.svg" alt="sign up illustration">
+      <img src="./assets/images/illustration-sign-up-mobile.svg" alt="sign up illustration" id="right_image_mobile">
+    </div>
 
-  Email address
-  email@company.com
-
-  Subscribe to monthly newsletter
-
-  <!-- Sign-up form end -->
-
-  <!-- Success message start -->
-
-  Thanks for subscribing!
-
-  A confirmation email has been sent to ash@loremcompany.com. 
-  Please open it and click the button inside to confirm your subscription.
-
-  Dismiss message
-
-  <!-- Success message end -->
-  
-  <div class="attribution">
-    Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. 
-    Coded by <a href="#">Your Name Here</a>.
+    <div class="attribution">
+      Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>.
+      Coded by <a href="https://github.com/greenMakaroni"> makaroni :> </a>
+    </div>
   </div>
+  <div id="confirmation_div" class="confirmation notVisible">
+    <div class="confirmation_top">
+      <img class="confirmation_img" src="./assets/images/icon-success.svg" alt="success_icon">
+      <h1 class="confirmation_header">Thanks for subscribing!</h1>
+      <p class="confirmation_par">A confirmation email has been sent to <span id="email_span"></span>. Please open it
+        and
+        click the button inside to confirm your subscription.</p>
+    </div>
+    <button class="dismiss" onclick="DismissMessage()"> Dismiss message </button>
+  </div>
+  <script>
+
+    function onError() {
+      document.getElementById('lbl_email_error').innerHTML = "Valid email required"
+      document.getElementById('email').classList.add('input_error')
+    }
+
+    const form = document.getElementById('signup_form')
+
+    if (form) {
+      form.addEventListener('submit', (event) => {
+        event.preventDefault()
+        const email_input = document.getElementById('email')
+        if (validateEmail(email_input.value)) {
+          onError()
+        } else {
+          document.getElementById('lbl_email_error').innerHTML = ""
+          document.getElementById('email').classList.remove('input_error')
+          document.getElementById('email_span').innerHTML = email_input.value
+          const signup_div = document.getElementById('main')
+          const confirmation = document.getElementById('confirmation_div')
+          signup_div.classList.add('notVisible')
+          confirmation.classList.remove('notVisible')
+        }
+      })
+    }
+
+    function validateEmail(email) {
+      let error = ""
+      if (email.length < 4) {
+        error = 'email too short'
+      }
+      if (!(email.match(/@/g) || []).length == 1) {
+        error = 'email should contain only one "@" sign'
+      }
+
+      return error.length > 0
+    }
+
+    function DismissMessage() {
+      const signup_div = document.getElementById('main')
+      const confirmation = document.getElementById('confirmation_div')
+      signup_div.classList.remove('notVisible')
+      signup_div.classList.add('signup')
+      confirmation.classList.add('notVisible')
+    }
+
+  </script>
 </body>
+
 </html>
